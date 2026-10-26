@@ -13,43 +13,56 @@ Sistem dirancang dengan arsitektur multi-peran (**Admin/Owner**, **Staff Kasir &
 
 ---
 
-## 2. Fitur Utama Website
+## 2. Fitur Utama & Galeri Tampilan Antarmuka Website
 
-1. **Halaman Beranda (Landing Page Publik - `/`)**:
-   - Identitas brand elegan dengan tagline *"A Little Taste of Elegance"*.
-   - Hero section interaktif dengan visual pastry dan tombol navigasi langsung ke Masuk, Daftar, dan Menu.
-   - Etalase katalog kreasi pastry unggulan (menampilkan foto, kategori, stok, nama, deskripsi, dan harga tanpa tombol pemesanan langsung sebelum login).
-   - Profil toko, filosofi artisan bakery Prancis, keunggulan bahan baku (mentega Prancis AOP Normandia, fermentasi ragi alami 36 jam), kontak butik, dan jam operasional.
+Berikut adalah dokumentasi fitur utama dan tangkapan layar (*screenshot*) setiap antarmuka website Nazelle Délices:
 
-2. **Sistem Autentikasi Mandiri & Aman (`/login` & `/register`)**:
-   - Pendaftaran akun publik dikhususkan untuk akun **Pelanggan**.
-   - Role Admin dan Staff dilindungi dan hanya dapat dikelola oleh pihak yang berwenang.
-   - Form login dilengkapi dengan **ikon mata (👁️)** untuk menampilkan/menyembunyikan kata sandi.
-   - Autentikasi divalidasi langsung ke database tanpa *bypass login* atau *1-click instant login*.
+### 1. Halaman Beranda Publik (`/`)
+Identitas brand elegan dengan tagline *"A Little Taste of Elegance"*, hero section interaktif, 3 pilar kualitas artisan Prancis (100% Mentega Prancis AOP, Fermentasi 36 Jam, Dipanggang Segar Setiap Pagi), etalase 6 kreasi pastry unggulan murni informatif, informasi butik Senopati, serta tombol navigasi Masuk & Daftar permanen.
 
-3. **Etalase Toko & Pemesanan Pelanggan (`/katalog` atau `/menu`)**:
-   - Katalog menu pastry lengkap dengan filter kategori dinamis dan pencarian instan (*live search*).
-   - Keranjang belanja interaktif (*slide-over drawer*) dengan pemilihan kuantitas real-time.
-   - Pilihan 3 metode pembayaran: **QRIS**, **Transfer Bank**, dan **Bayar di Kasir**.
-   - Form checkout yang disederhanakan (nama pemesan, catatan pesanan, ringkasan belanja, dan metode pembayaran).
+![Halaman Beranda Nazelle Délices](docs/screenshots/01-landing-page.png)
 
-4. **Simulasi Pembayaran Terverifikasi (`/sales/{sale}/invoice`)**:
-   - Fitur simulasi pembayaran instan khusus keperluan penilaian akademik UTS.
-   - Memperbarui status transaksi menjadi **"Pembayaran Berhasil"** secara atomik di database dengan nomor referensi unik dan tanggal/jam bayar.
-   - Nota / faktur resmi yang dapat dicetak (*print-ready receipt*) dilengkapi label resmi *"Simulasi Pembayaran"*.
+---
 
-5. **Kasir POS Toko Roti (`/sales/create`)**:
-   - Penjualan kasir langsung (POS) cepat dengan kalkulator kembalian uang tunai otomatis.
-   - Pengurangan stok seketika secara atomik dengan proteksi `lockForUpdate()`.
+### 2. Halaman Masuk / Login (`/login`)
+Autentikasi akun aman berbasis database murni tanpa tombol bypass. Dilengkapi fitur interaktif **ikon mata (👁️)** untuk menampilkan/menyembunyikan kata sandi serta kartu informasi akun demo untuk kemudahan pengujian.
 
-6. **Pengadaan Bahan & Restock (`/purchases/create`)**:
-   - Formulir multi-item dinamis untuk pencatatan pasokan bahan baku dari supplier (tepung T55, mentega Prancis, cokelat Valrhona, ragi alami).
-   - Penambahan stok produk otomatis saat transaksi disimpan.
+![Halaman Login dengan Ikon Mata](docs/screenshots/02-login-page.png)
 
-7. **Dashboard Multi-Role Berbasis Data Aktual (`/dashboard`)**:
-   - **Admin/Owner**: Metrik total varian produk, peringatan stok kritis (*Baker's Alert*), total omzet harian & bulanan, manajemen master data produk, kategori, supplier, pengguna, dan pembatalan transaksi dengan pengembalian stok.
-   - **Staff Kasir & Baker**: Ringkasan kasir hari ini, status stok produk, dan akses cepat ke POS.
-   - **Pelanggan**: Ringkasan pesanan aktif, akses cepat ke etalase menu, dan riwayat belanja.
+---
+
+### 3. Halaman Pendaftaran Pelanggan (`/register`)
+Formulir registrasi publik yang secara otomatis memvalidasi email unik, konfirmasi kata sandi minimal 6 karakter, dan secara tegas mengunci pendaftaran hanya untuk akun berstatus **Pelanggan (Customer)** demi mencegah eskalasi hak akses.
+
+![Halaman Registrasi Pelanggan](docs/screenshots/03-register-page.png)
+
+---
+
+### 4. Etalase Katalog Toko & Pemesanan (`/katalog`)
+Katalog menu pastry lengkap dengan filter kategori dinamis (*Viennoiserie, Sourdough, Patisserie, Cakes, Savory, Coffee*), pencarian instan (*live search*), indikator ketersediaan stok real-time, tombol pemesanan cepat, dan keranjang belanja interaktif (*slide-over cart drawer*) yang mendukung 3 metode pembayaran (**QRIS, Transfer Bank, Bayar di Kasir**).
+
+![Katalog Etalase Menu Pastry & Toko](docs/screenshots/04-katalog-pastry.png)
+
+---
+
+### 5. Dashboard Eksekutif Owner / Admin (`/dashboard`)
+Pusat pemantauan bisnis pemilik toko: menampilkan metrik total varian produk aktif, akumulasi omzet harian & bulanan, daftar peringatan stok kritis (*Baker's Alert*), serta akses manajemen master data (produk, kategori, supplier, pengguna, dan pembatalan transaksi).
+
+![Dashboard Eksekutif Admin/Owner](docs/screenshots/05-dashboard-admin.png)
+
+---
+
+### 6. Sistem Kasir POS Toko Roti (`/sales/create`)
+Antarmuka kasir cepat untuk melayani pesanan fisik di butik Senopati. Kasir cukup mengklik kartu gambar menu, memasukkan nominal uang tunai yang diterima, dan kalkulator kasir akan otomatis menghitung kembalian uang pembeli.
+
+![Kasir POS Toko Roti](docs/screenshots/06-kasir-pos.png)
+
+---
+
+### 7. Faktur Nota Transaksi & Simulasi Pembayaran (`/sales/{sale}/invoice`)
+Bukti pemesanan resmi format struk belanja (*print-ready thermal receipt*). Dilengkapi tombol **Simulasi Pembayaran (Uji Coba UTS)** untuk menguji perubahan status transaksi menjadi *"Pembayaran Berhasil"* dengan tanggal/jam pelunasan dan nomor referensi unik terverifikasi di database.
+
+![Faktur Nota Transaksi & Simulasi Pembayaran](docs/screenshots/07-invoice-nota.png)
 
 ---
 

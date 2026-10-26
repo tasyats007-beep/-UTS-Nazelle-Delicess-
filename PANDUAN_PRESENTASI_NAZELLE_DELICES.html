@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Panduan Presentasi UTS - Nazelle Délices</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 18mm 15mm 20mm 15mm;
+            @bottom-right {
+                content: "Halaman " counter(page);
+                font-size: 9pt;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                color: #888888;
+            }
+            @bottom-left {
+                content: "Nazelle Délices — Panduan Presentasi UTS Pemrograman Web 2";
+                font-size: 8.5pt;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                color: #888888;
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+            color: #2D2520;
+            line-height: 1.6;
+            font-size: 10.5pt;
+            background: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Cover & Headers */
+        .cover {
+            text-align: center;
+            padding: 40px 20px 30px 20px;
+            background: linear-gradient(135deg, #261309 0%, #3D2010 60%, #5F351B 100%);
+            color: #FFFFFF;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            page-break-after: avoid;
+        }
+
+        .cover .logo-croissant {
+            font-size: 42pt;
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+
+        .cover h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 26pt;
+            margin: 10px 0 5px 0;
+            letter-spacing: 0.5px;
+            color: #FFFFFF;
+        }
+
+        .cover .tagline {
+            font-style: italic;
+            font-size: 13pt;
+            color: #F6D8A8;
+            margin-bottom: 15px;
+            font-family: Georgia, 'Times New Roman', serif;
+        }
+
+        .cover .badge {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.25);
+            border: 1px solid #D97706;
+            color: #FDE68A;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 9.5pt;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .cover .meta {
+            margin-top: 20px;
+            font-size: 9.5pt;
+            color: #E7CCA9;
+            border-top: 1px solid rgba(231, 204, 169, 0.3);
+            padding-top: 12px;
+        }
+
+        h2 {
+            font-family: Georgia, 'Times New Roman', serif;
+            color: #3D2010;
+            font-size: 16pt;
+            border-bottom: 2px solid #D97706;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            margin-bottom: 14px;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-family: Georgia, 'Times New Roman', serif;
+            color: #5F351B;
+            font-size: 13pt;
+            margin-top: 22px;
+            margin-bottom: 8px;
+            page-break-after: avoid;
+        }
+
+        h4 {
+            color: #261309;
+            font-size: 11pt;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            page-break-after: avoid;
+        }
+
+        p {
+            margin: 0 0 10px 0;
+            text-align: justify;
+        }
+
+        /* Callout Box */
+        .callout {
+            background-color: #FAF7F2;
+            border-left: 4px solid #B45309;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 10pt;
+            page-break-inside: avoid;
+        }
+
+        .callout-title {
+            font-weight: bold;
+            color: #78350F;
+            margin-bottom: 4px;
+        }
+
+        .callout-success {
+            background-color: #F0FDF4;
+            border-left-color: #16A34A;
+        }
+        .callout-success .callout-title { color: #166534; }
+
+        .callout-warning {
+            background-color: #FFFBEB;
+            border-left-color: #D97706;
+        }
+        .callout-warning .callout-title { color: #92400E; }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 9.5pt;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid #E5E7EB;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #3D2010;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #FBF9F6;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: #1E1E1E;
+            color: #D4D4D4;
+            padding: 12px 14px;
+            border-radius: 6px;
+            font-family: Consolas, 'Courier New', Courier, monospace;
+            font-size: 9pt;
+            line-height: 1.45;
+            overflow-x: auto;
+            margin: 12px 0;
+            page-break-inside: avoid;
+            border: 1px solid #333333;
+        }
+
+        code {
+            font-family: Consolas, 'Courier New', Courier, monospace;
+            background-color: #F3ECE2;
+            color: #874E25;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-size: 9.5pt;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            font-size: inherit;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 0 0 12px 0;
+            padding-left: 22px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        /* Page breaks */
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* Q&A Cards */
+        .qa-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            border-top: 3px solid #B45309;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            page-break-inside: avoid;
+        }
+
+        .qa-question {
+            font-weight: bold;
+            color: #3D2010;
+            font-size: 10.5pt;
+            margin-bottom: 6px;
+        }
+
+        .qa-answer {
+            color: #374151;
+            font-size: 9.8pt;
+        }
+
+        /* Step workflow */
+        .step-container {
+            margin: 15px 0;
+        }
+
+        .step-box {
+            background: #FAF7F2;
+            border: 1px solid #E7CCA9;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+
+        .step-num {
+            display: inline-block;
+            background: #3D2010;
+            color: #FFF;
+            width: 22px;
+            height: 22px;
+            line-height: 22px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 9pt;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            color: #3D2010;
+            font-size: 10.5pt;
+        }
+
+        /* Checklist */
+        .checklist-item {
+            margin-bottom: 8px;
+            padding-left: 26px;
+            position: relative;
+        }
+
+        .checklist-box {
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #874E25;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COVER SECTION -->
+    <div class="cover">
+        <div class="logo-croissant">🥐</div>
+        <h1>Nazelle Délices</h1>
+        <div class="tagline">"A Little Taste of Elegance — Pâtisserie &amp; Boulangerie Artisanale"</div>
+        <div class="badge">Buku Panduan Presentasi Ujian Tengah Semester (UTS)</div>
+        <div class="meta">
+            Mata Kuliah: <strong>Pemrograman Web 2</strong> &bull; Framework: <strong>Laravel 9/10 (PHP 8.2)</strong><br>
+            Disusun untuk Mahasiswa: Panduan Demonstrasi, Arsitektur Database, dan Bedah Source Code
+        </div>
+    </div>
+
+    <!-- 1. PENGENALAN PROJECT -->
+    <h2>1. Pengenalan Project &amp; Skenario Bisnis</h2>
+
+    <h3>A. Apa itu Website Nazelle Délices?</h3>
+    <p>
+        <strong>Nazelle Délices</strong> adalah sistem informasi dan aplikasi web e-commerce manajemen toko roti dan kue artisan Prancis (<em>French Pâtisserie &amp; Boulangerie</em>) yang berbasis di Senopati, Jakarta Selatan. Aplikasi ini mengintegrasikan seluruh operasional toko roti fisik ke dalam satu ekosistem web yang modern.
+    </p>
+
+    <div class="callout">
+        <div class="callout-title">💡 Analogi Sederhana untuk Pemula:</div>
+        Bayangkan Nazelle Délices seperti gedung toko roti fisik berlantai dua:
+        <ul>
+            <li><strong>Lantai 1 Depan:</strong> Etalase tempat pembeli umum melihat croissant hangat, mengecek stok, dan memesan.</li>
+            <li><strong>Meja Kasir:</strong> Tempat kasir toko melayani transaksi langsung dengan cepat dan mencetak nota struk belanja.</li>
+            <li><strong>Dapur &amp; Gudang Belakang:</strong> Tempat baker dan staf mencatat pasokan bahan baku (tepung, mentega Prancis) dari supplier.</li>
+            <li><strong>Ruang Kantor Pemilik:</strong> Tempat Ibu Pemilik Toko (Madame Nazelle) melihat laporan keuntungan dan grafik penjualan.</li>
+        </ul>
+        Semua aktivitas tersebut digabungkan ke dalam satu sistem web yang otomatis dan saling terhubung.
+    </div>
+
+    <h3>B. Masalah Nyata yang Diselesaikan Sistem</h3>
+    <table>
+        <tr>
+            <th style="width: 45%;">Masalah di Toko Tradisional</th>
+            <th>Solusi di Project Nazelle Délices</th>
+        </tr>
+        <tr>
+            <td><strong>Overselling (Stok Habis Tetap Terjual):</strong> Pelanggan memesan 5 kue, padahal sisa di rak tinggal 2.</td>
+            <td><strong>Pessimistic Locking (<code>lockForUpdate</code>):</strong> Sistem mengunci data di database saat transaksi berlangsung. Jika stok kurang, pesanan langsung ditolak secara aman.</td>
+        </tr>
+        <tr>
+            <td><strong>Kecurangan Harga (Client-side Hack):</strong> Pembeli nakal mengubah harga kue Rp 28.000 jadi Rp 1.000 via Inspect Element browser.</td>
+            <td><strong>Zero-Trust Server Price:</strong> Total bayar tidak dipercaya dari browser, melainkan dihitung ulang 100% di server dari database resmi.</td>
+        </tr>
+        <tr>
+            <td><strong>Data Nyangkut saat Error (Inkonsistensi):</strong> Uang tercatat masuk tetapi stok gagal dipotong karena koneksi putus.</td>
+            <td><strong>Atomic Transaction (<code>DB::transaction</code>):</strong> Menganut prinsip <em>All-or-Nothing</em>. Jika ada satu item gagal, seluruh mutasi dibatalkan (rollback).</td>
+        </tr>
+        <tr>
+            <td><strong>Kebocoran Hak Akses:</strong> Pembeli biasa iseng mengetik URL admin <code>/users</code> untuk membajak akun.</td>
+            <td><strong>Middleware (<code>EnsureAdmin</code>):</strong> Server memblokir request dan merespons dengan HTTP Status 403 Forbidden.</td>
+        </tr>
+    </table>
+
+    <h3>C. Tiga Peran Pengguna (Role Otorisasi)</h3>
+    <ul>
+        <li>👑 <strong>Owner / Administrator (<code>admin@nazelle.test</code>):</strong> Hak akses tertinggi. Mengelola master produk, kategori, supplier bahan, akun staf/pelanggan, memantau omzet di dashboard eksekutif, dan memiliki wewenang membatalkan transaksi penjualan (stok otomatis dikembalikan).</li>
+        <li>🥖 <strong>Staff Kasir &amp; Baker (<code>staff@nazelle.test</code>):</strong> Mengoperasikan kasir POS cepat, mencatat pasokan restock bahan baku dari supplier, dan memantau stok kue yang menipis.</li>
+        <li>🧁 <strong>Pelanggan / Customer (<code>pelanggan@nazelle.test</code>):</strong> Menjelajahi katalog etalase, memesan via keranjang slide-over, memilih metode pembayaran (QRIS, Transfer Bank, Kasir), melakukan simulasi pembayaran, dan mencetak bukti nota resmi.</li>
+    </ul>
+
+    <!-- 2. PENJELASAN TAMPILAN WEBSITE -->
+    <div class="page-break"></div>
+    <h2>2. Penjelasan Seluruh Halaman Website</h2>
+
+    <h3>1. Halaman Beranda Publik (<code>/</code> atau <code>/beranda</code>)</h3>
+    <p>
+        Pintu gerbang utama website yang dapat diakses siapa saja tanpa harus login. Menampilkan identitas brand Prancis, tagline <em>"A Little Taste of Elegance"</em>, 3 keunggulan bahan baku (Mentega Prancis AOP, Fermentasi 36 Jam, Panggang Segar Setiap Pagi), serta etalase 6 kreasi produk unggulan.
+    </p>
+    <div class="callout callout-warning">
+        <div class="callout-title">Poin Penting untuk Dosen:</div>
+        Kartu produk di halaman Beranda sengaja dibuat <strong>murni informatif</strong> (menampilkan foto, kategori, sisa stok, nama, dan harga) tanpa tombol pesan langsung. Pemesanan difokuskan di dalam halaman katalog setelah pelanggan login untuk menjamin keamanan pesanan.
+    </div>
+
+    <h3>2. Halaman Masuk / Login (<code>/login</code>)</h3>
+    <p>
+        Tempat pengguna memasukkan email/username dan kata sandi. Dilengkapi fitur <strong>ikon mata (👁️)</strong> untuk mengintip kata sandi. Sistem memvalidasi password menggunakan algoritma <code>Hash::check()</code> ke database. Tidak ada tombol jalan pintas (<em>no bypass login</em>) demi memenuhi standar keamanan.
+    </p>
+
+    <h3>3. Halaman Pendaftaran Pelanggan (<code>/register</code>)</h3>
+    <p>
+        Pendaftaran akun publik yang otomatis menetapkan peran sebagai <code>role: customer</code>. Kolom role disembunyikan agar pihak asing tidak bisa mendaftarkan diri sebagai Admin toko.
+    </p>
+
+    <h3>4. Halaman Katalog Toko &amp; Pemesanan (<code>/katalog</code> atau <code>/menu</code>)</h3>
+    <p>
+        Etalase belanja interaktif lengkap dengan filter kategori (Viennoiserie, Sourdough, Patisserie, Cakes, Savory, Coffee) dan pencarian instan (<em>live search</em>). Setiap kartu produk memiliki tombol kuning <strong>"+ Pesan"</strong> yang memasukkan item ke panel <em>Slide-over Drawer Cart</em> di sebelah kanan layar.
+    </p>
+
+    <h3>5. Panel Keranjang Belanja &amp; Formulir Checkout</h3>
+    <p>
+        Menghitung subtotal otomatis saat kuantitas ditambah atau dikurangi. Menyediakan input nama pemesan, catatan pesanan, serta <strong>3 pilihan metode pembayaran</strong>:
+    </p>
+    <ul>
+        <li><strong>QRIS:</strong> Pembayaran instan via scan kode QR digital.</li>
+        <li><strong>Transfer Bank:</strong> Pembayaran ke nomor rekening resmi butik Nazelle Délices.</li>
+        <li><strong>Bayar di Kasir:</strong> Pembayaran tunai langsung saat mengambil roti di butik.</li>
+    </ul>
+
+    <h3>6. Faktur Nota Pesanan &amp; Simulasi Pembayaran (<code>/sales/{sale}/invoice</code>)</h3>
+    <p>
+        Halaman nota belanja resmi berformat struk kasir (*print-ready receipt*). Memuat nomor nota unik (contoh: <code>INV-20261027-0001</code>), tanggal transaksi, dan rincian item.
+    </p>
+    <div class="callout callout-success">
+        <div class="callout-title">Fitur Simulasi Pembayaran Akademik:</div>
+        Pada halaman faktur, tersedia tombol <strong>"Simulasi Pembayaran (Uji Coba UTS)"</strong>. Saat ditekan, sistem secara instan memverifikasi transaksi, mengubah status menjadi <strong>"Pembayaran Berhasil"</strong>, mencatat tanggal/jam pelunasan, dan menerbitkan kode referensi unik (contoh: <code>SIM-A8F2C1D4</code>).
+    </div>
+
+    <h3>7. Halaman Kasir POS Toko Roti (<code>/sales/create</code>)</h3>
+    <p>
+        Khusus digunakan oleh Staff Kasir untuk mencatat penjualan di kasir fisik. Kasir cukup mengklik kartu gambar roti, memasukkan nominal uang tunai yang diterima, dan kalkulator kasir akan otomatis menghitung uang kembalian pembeli.
+    </p>
+
+    <h3>8. Halaman Restock Pembelian Bahan (<code>/purchases/create</code>)</h3>
+    <p>
+        Formulir multi-item dinamis untuk mencatat pembelian pasokan bahan baku dari supplier (misal: tepung T55, mentega Normandia). Stok produk di database otomatis bertambah (<em>increment</em>) seketika saat disimpan.
+    </p>
+
+    <!-- 3. TUTORIAL DEMO WEBSITE -->
+    <div class="page-break"></div>
+    <h2>3. Tutorial Demonstrasi Website di Depan Dosen</h2>
+
+    <p>Ikuti 5 langkah demonstrasi berurutan ini agar presentasi Anda dinilai sangat terstruktur dan meyakinkan:</p>
+
+    <div class="step-container">
+        <div class="step-box">
+            <span class="step-num">1</span>
+            <span class="step-title">Buka Beranda Publik (Tanpa Login)</span>
+            <p style="margin-top: 6px;">
+                Buka browser ke <code>http://127.0.0.1:8000/</code>. Tunjukkan identitas toko, kualitas bahan baku Prancis, etalase kue unggulan (informasi harga dan stok), serta tombol Masuk &amp; Daftar di pojok kanan atas.
+            </p>
+        </div>
+
+        <div class="step-box">
+            <span class="step-num">2</span>
+            <span class="step-title">Uji Keamanan Form Login &amp; Ikon Mata 👁️</span>
+            <p style="margin-top: 6px;">
+                Buka halaman <code>/login</code>. Masukkan email <code>pelanggan@nazelle.test</code> dan ketik password salah <code>salah123</code>. Klik <strong>ikon mata (👁️)</strong> untuk memperlihatkan teks password. Tekan tombol Masuk dan tunjukkan pesan error merah: <em>"Email atau kata sandi salah"</em>.
+            </p>
+        </div>
+
+        <div class="step-box">
+            <span class="step-num">3</span>
+            <span class="step-title">Login Pelanggan, Pemesanan, &amp; Simulasi Pembayaran</span>
+            <p style="margin-top: 6px;">
+                Ketik password yang benar: <code>password</code>. Masuk ke menu <strong>"Menu &amp; Toko"</strong>, pilih 2 Croissant dan 1 Baguette, buka keranjang slide-over, pilih metode pembayaran <strong>QRIS</strong>, dan klik <strong>"Konfirmasi Pesanan"</strong>. Di halaman nota, klik tombol <strong>"Simulasi Pembayaran"</strong>. Tunjukkan bahwa status nota seketika berubah menjadi hijau: <em>"Pembayaran Berhasil"</em>.
+            </p>
+        </div>
+
+        <div class="step-box">
+            <span class="step-num">4</span>
+            <span class="step-title">Login Staff Kasir &amp; Buktikan Pengurangan Stok Otomatis</span>
+            <p style="margin-top: 6px;">
+                Logout, lalu login sebagai Staff (<code>staff@nazelle.test</code> / <code>password</code>). Masuk ke menu <strong>"Kasir (POS)"</strong>. Tunjukkan kepada dosen bahwa sisa stok Croissant di kasir <strong>sudah otomatis berkurang</strong> akibat transaksi Budi tadi.
+            </p>
+        </div>
+
+        <div class="step-box">
+            <span class="step-num">5</span>
+            <span class="step-title">Login Admin / Owner &amp; Fitur Pembatalan Transaksi</span>
+            <p style="margin-top: 6px;">
+                Logout dan login sebagai Admin (<code>admin@nazelle.test</code> / <code>password</code>). Tunjukkan Dashboard eksekutif: omzet pendapatan hari ini otomatis bertambah. Masuk ke menu <strong>"Penjualan"</strong>, buka nota tadi, lalu klik tombol merah <strong>"Batalkan Transaksi"</strong>. Jelaskan bahwa sistem secara atomik membatalkan penjualan sekaligus mengembalikan (restore) stok produk ke rak toko.
+            </p>
+        </div>
+    </div>
+
+    <!-- 4. PETA STRUKTUR FOLDER -->
+    <div class="page-break"></div>
+    <h2>4. Peta Struktur Folder Project di VS Code</h2>
+
+    <pre><code>Nazelle-Delices/
+├── app/                  # Otak aplikasi: Controller, Model, dan Middleware
+│   ├── Http/
+│   │   ├── Controllers/  # Logika bisnis: Storefront, Sale, Auth, Landing, Product
+│   │   └── Middleware/   # Satpam otorisasi: EnsureAdmin, EnsureStaff
+│   └── Models/           # Representasi tabel Eloquent: User, Product, Sale, Purchase
+├── database/             # Basis data: 13 migrasi tabel, seeder, dan file database.sqlite
+├── public/               # Pintu depan web server (index.php, favicon)
+├── resources/views/      # Tampilan antarmuka Blade template (auth, landing, sales, storefront)
+├── routes/web.php        # Peta navigasi URL web (56 rute aktif)
+├── tests/Feature/        # 24 skenario pengujian otomatis (100% Passed)
+├── .env                  # Konfigurasi environment lokal (Database SQLite / MySQL)
+├── .env.example          # Template environment aman untuk GitHub (tanpa password rahasia)
+├── .gitignore            # Pengabaian file sensitif Git (.env, database.sqlite, /vendor)
+├── composer.json         # Daftar pustaka PHP yang dibutuhkan project
+└── jalankan.bat          # Script otomatis 1-klik untuk menyalakan server di Windows</code></pre>
+
+    <!-- 5. BEDAH KODE KUNCI -->
+    <h2>5. Bedah Kode Kunci (Line-by-Line Code Walkthrough)</h2>
+
+    <h3>A. Jantung Transaksi Checkout &amp; Anti-Overselling</h3>
+    <p><strong>Lokasi File:</strong> <code>app/Http/Controllers/StorefrontController.php</code> (Method: <code>checkout</code>)</p>
+
+    <pre><code>// 1. Membungkus seluruh operasi ke dalam transaksi database atomik
+$sale = DB::transaction(function () use ($validated, $request) {
+    
+    // 2. Buat header nota penjualan baru
+    $sale = Sale::create([
+        'user_id'        => Auth::id() ?? 1,
+        'sale_number'    => $this->generateSaleNumber(),
+        'customer_name'  => $validated['customer_name'],
+        'payment_method' => $validated['payment_method'] ?? 'cashier',
+        'payment_status' => 'unpaid',
+        'status'         => 'completed',
+        'sold_at'        => Carbon::now(),
+    ]);
+
+    $grandTotal = 0;
+
+    foreach ($validated['items'] as $itemData) {
+        // 3. PESSIMISTIC LOCKING: Kunci baris database agar tidak dibeli orang lain
+        $product = Product::lockForUpdate()->findOrFail($itemData['product_id']);
+        $qty = (int) $itemData['quantity'];
+
+        // 4. Pengecekan sisa stok: cegah stok menjadi minus
+        if ($qty < 1 || $product->stock < $qty) {
+            throw ValidationException::withMessages([
+                'items' => "Stok '{$product->name}' tidak mencukupi. Sisa: {$product->stock} pcs."
+            ]);
+        }
+
+        // 5. ZERO-TRUST PRICE: Ambil harga resmi langsung dari database server
+        $unitPrice = (float) $product->selling_price;
+        $subtotal = $unitPrice * $qty;
+
+        $sale->items()->create([
+            'product_id' => $product->id,
+            'quantity'   => $qty,
+            'unit_price' => $unitPrice,
+            'subtotal'   => $subtotal,
+        ]);
+
+        // 6. Potong stok produk secara seketika
+        $product->decrement('stock', $qty);
+        $grandTotal += $subtotal;
+    }
+
+    $sale->update(['total' => $grandTotal]);
+    return $sale;
+});</code></pre>
+
+    <div class="callout">
+        <div class="callout-title">Cara Menjelaskan ke Dosen:</div>
+        <em>"Method <code>checkout()</code> ini dirancang dengan standar enterprise: pertama, <code>DB::transaction</code> menjamin konsistensi ACID (all-or-nothing); kedua, <code>Product::lockForUpdate()</code> mencegah race-condition saat web diakses ramai; dan ketiga, harga dihitung di server dari database resmi untuk mencegah manipulasi harga dari browser."</em>
+    </div>
+
+    <h3>B. Logika Verifikasi Kata Sandi Murni Database</h3>
+    <p><strong>Lokasi File:</strong> <code>app/Http/Controllers/AuthController.php</code> (Method: <code>login</code>)</p>
+
+    <pre><code>// Cari user berdasarkan email ATAU nama pengguna
+$user = User::where('email', $loginInput)->orWhere('name', $loginInput)->first();
+
+// Verifikasi password teks polos dengan enkripsi hash Bcrypt di database
+if (! $user || ! Hash::check($password, $user->password)) {
+    return back()->withErrors([
+        'email' => 'Email atau kata sandi salah',
+    ])->onlyInput('email');
+}
+
+Auth::login($user, $request->boolean('remember'));
+$request->session()->regenerate(); // Mencegah Session Fixation Attack</code></pre>
+
+    <!-- 6. CARA KERJA DATABASE -->
+    <div class="page-break"></div>
+    <h2>6. Arsitektur &amp; Siklus Data Database</h2>
+
+    <h3>A. 8 Tabel Utama &amp; Fungsinya</h3>
+    <table>
+        <tr>
+            <th style="width: 25%;">Nama Tabel</th>
+            <th>Fungsi &amp; Data yang Disimpan</th>
+        </tr>
+        <tr>
+            <td><code>users</code></td>
+            <td>Menyimpan akun pengguna (nama, email, hash password, dan role: admin, staff, customer).</td>
+        </tr>
+        <tr>
+            <td><code>categories</code></td>
+            <td>Klasifikasi menu (Viennoiserie, Sourdough, Patisserie, Cakes, Savory, Beverages).</td>
+        </tr>
+        <tr>
+            <td><code>products</code></td>
+            <td>Katalog kue (SKU unik, nama, deskripsi, harga beli, harga jual, stok, batas minimum).</td>
+        </tr>
+        <tr>
+            <td><code>suppliers</code></td>
+            <td>Data distributor pemasok bahan (tepung terigu T55, mentega Prancis, cokelat Valrhona).</td>
+        </tr>
+        <tr>
+            <td><code>purchases</code> &amp; <code>purchase_items</code></td>
+            <td>Mencatat nota restock pasokan bahan baku dari supplier yang menambah stok produk.</td>
+        </tr>
+        <tr>
+            <td><code>sales</code> &amp; <code>sale_items</code></td>
+            <td>Mencatat nota pesanan penjualan kasir maupun toko online yang memotong stok produk.</td>
+        </tr>
+    </table>
+
+    <h3>B. Relasi Antarmodel Eloquent</h3>
+    <ul>
+        <li><code>Category</code> <strong>hasMany</strong> <code>Product</code> &bull; <code>Product</code> <strong>belongsTo</strong> <code>Category</code></li>
+        <li><code>Sale</code> <strong>hasMany</strong> <code>SaleItem</code> &bull; <code>SaleItem</code> <strong>belongsTo</strong> <code>Sale</code></li>
+        <li><code>User</code> <strong>hasMany</strong> <code>Sale</code> &bull; <code>Sale</code> <strong>belongsTo</strong> <code>User</code></li>
+        <li><code>Supplier</code> <strong>hasMany</strong> <code>Purchase</code> &bull; <code>Purchase</code> <strong>belongsTo</strong> <code>Supplier</code></li>
+    </ul>
+
+    <!-- 7. CARA MENJALANKAN PROJECT -->
+    <h2>7. Panduan Menjalankan Project di VS Code</h2>
+
+    <h3>Langkah Cepat (1-Klik via Windows):</h3>
+    <ol>
+        <li>Buka VS Code, pilih menu <strong>File</strong> &rarr; <strong>Open Folder...</strong> &rarr; Arahkan ke: <code>C:\Users\ASUS\Documents\Nazelle-Delices</code>.</li>
+        <li>Buka terminal VS Code (tekan <code>Ctrl + `</code>).</li>
+        <li>Ketik perintah: <code>.\jalankan.bat</code> lalu tekan Enter.</li>
+        <li>Buka browser ke alamat: <code>http://127.0.0.1:8000</code>.</li>
+    </ol>
+
+    <h3>Menggunakan MySQL (XAMPP):</h3>
+    <ol>
+        <li>Start Apache &amp; MySQL di XAMPP Control Panel. Buka phpMyAdmin, buat database baru <code>nazelle_delices</code>.</li>
+        <li>Buka file <code>.env</code> di VS Code, ubah <code>DB_CONNECTION=mysql</code> dan <code>DB_DATABASE=nazelle_delices</code>.</li>
+        <li>Jalankan di terminal: <code>php artisan migrate:fresh --seed</code>.</li>
+    </ol>
+
+    <!-- 8. NASKAH PRESENTASI -->
+    <div class="page-break"></div>
+    <h2>8. Naskah Lengkap Berbicara di Depan Dosen</h2>
+
+    <div class="qa-card">
+        <div class="qa-question">1. Pembukaan (1 Menit):</div>
+        <div class="qa-answer">
+            <em>"Selamat pagi/siang kepada Bapak/Ibu Dosen yang saya hormati. Perkenalkan, nama saya [Nama Anda]. Hari ini saya mempresentasikan project Ujian Tengah Semester Pemrograman Web 2, yaitu aplikasi web bisnis terintegrasi bernama <strong>Nazelle Délices</strong>. Sistem ini mendigitalisasi operasional butik roti Prancis: menggabungkan etalase katalog pelanggan, kasir POS kasir cepat, restock bahan supplier, serta laporan omzet bisnis pemilik."</em>
+        </div>
+    </div>
+
+    <div class="qa-card">
+        <div class="qa-question">2. Latar Belakang &amp; Solusi (1.5 Menit):</div>
+        <div class="qa-answer">
+            <em>"Aplikasi ini menyelesaikan 3 masalah klasik toko fisik: pertama, <strong>anti-overselling</strong> menggunakan teknik database <code>lockForUpdate()</code> agar stok tidak minus; kedua, <strong>keamanan transaksi</strong> dengan prinsip Zero-Trust di mana harga dihitung 100% di server dari database; dan ketiga, <strong>transaksi atomik</strong> menggunakan <code>DB::transaction</code> sehingga jika ada item gagal, seluruh pesanan dibatalkan tanpa merusak data."</em>
+        </div>
+    </div>
+
+    <div class="qa-card">
+        <div class="qa-question">3. Demonstrasi Fitur (3 Menit):</div>
+        <div class="qa-answer">
+            <em>"Mari kita lihat aplikasinya langsung. Di Beranda publik, pengunjung dapat melihat identitas butik dan katalog produk tanpa wajib login. Saat masuk ke halaman login, terdapat ikon mata 👁️ untuk intip password dengan validasi murni database tanpa bypass. Saya login sebagai pelanggan, memilih 2 croissant, membuka keranjang slide-over, memilih metode QRIS, dan membuat pesanan. Pada halaman faktur, saya menekan tombol Simulasi Pembayaran, dan status transaksi seketika berubah menjadi Pembayaran Berhasil dengan nomor referensi unik dan nota siap dicetak. Saat kita beralih ke akun kasir, stok produk terbukti otomatis terpotong secara real-time."</em>
+        </div>
+    </div>
+
+    <div class="qa-card">
+        <div class="qa-question">4. Penutup (30 Detik):</div>
+        <div class="qa-answer">
+            <em>"Secara kualitas perangkat lunak, sistem ini telah lolos <strong>24 unit dan feature automated tests</strong> dengan tingkat keberhasilan 100%. Demikian presentasi saya, terima kasih atas perhatian Bapak/Ibu Dosen, saya siap menerima pertanyaan maupun masukan."</em>
+        </div>
+    </div>
+
+    <!-- 9. PREDIKSI PERTANYAAN DOSEN -->
+    <h2>9. Prediksi Pertanyaan Dosen &amp; Jawaban Mantap</h2>
+
+    <div class="qa-card">
+        <div class="qa-question">Q1: Mengapa kamu memilih framework Laravel daripada PHP Native?</div>
+        <div class="qa-answer">
+            <strong>Jawaban:</strong> <em>"Laravel menyediakan struktur arsitektur MVC yang rapi, keamanan bawaan terhadap CSRF dan SQL Injection, manajemen database terstruktur via Migration dan Eloquent ORM, serta dukungan 24 automated unit tests yang menjamin aplikasi bebas bug saat dideploy ke produksi."</em>
+        </div>
+    </div>
+
+    <div class="qa-card">
+        <div class="qa-question">Q2: Bagaimana sistem mencegah terjadinya overselling saat stok kue hampir habis?</div>
+        <div class="qa-answer">
+            <strong>Jawaban:</strong> <em>"Kami menggunakan teknik <strong>Pessimistic Locking</strong> dengan perintah <code>Product::lockForUpdate()</code> di dalam <code>DB::transaction()</code>. Ketika pelanggan memproses pesanan, baris produk di database dikunci sementara waktu sehingga jika ada pelanggan lain yang memesan di detik yang sama, sistem memeriksa ketersediaan stok terlebih dahulu sebelum memotongnya."</em>
+        </div>
+    </div>
+
+    <div class="qa-card">
+        <div class="qa-question">Q3: Bagaimana cara sistem membedakan hak akses Admin, Staff, dan Pelanggan?</div>
+        <div class="qa-answer">
+            <strong>Jawaban:</strong> <em>"Melalui kolom <code>role</code> pada tabel <code>users</code> yang diproteksi oleh <strong>Middleware</strong> (<code>EnsureAdmin</code> dan <code>EnsureStaff</code>). Jika user pelanggan mencoba membuka URL admin <code>/users</code>, middleware langsung mencegat request dan mengembalikan HTTP Status 403 Forbidden."</em>
+        </div>
+    </div>
+
+    <div class="qa-card">
+        <div class="qa-question">Q4: Mengapa total harga tidak dihitung dari JavaScript di browser?</div>
+        <div class="qa-answer">
+            <strong>Jawaban:</strong> <em>"Menerapkan prinsip <strong>Zero-Trust Client Input</strong>. Kode JavaScript di browser dapat diedit dengan Inspect Element oleh hacker untuk memanipulasi harga. Karena itu, browser hanya mengirimkan ID produk dan jumlah, lalu server mengambil harga resmi langsung dari database dan menghitung total secara independen."</em>
+        </div>
+    </div>
+
+    <!-- 10. CHECKLIST PRESENTASI -->
+    <div class="page-break"></div>
+    <h2>10. Checklist Final Sebelum Maju Presentasi</h2>
+
+    <div class="checklist-item">
+        <div class="checklist-box"></div>
+        <strong>Folder Terbuka di VS Code:</strong> Folder <code>C:\Users\ASUS\Documents\Nazelle-Delices</code> sudah dibuka di VS Code.
+    </div>
+    <div class="checklist-item">
+        <div class="checklist-box"></div>
+        <strong>Server Laravel Menyala:</strong> Perintah <code>.\jalankan.bat</code> atau <code>php artisan serve</code> aktif di terminal.
+    </div>
+    <div class="checklist-item">
+        <div class="checklist-box"></div>
+        <strong>Tab Browser Siap:</strong> Buka halaman <code>http://127.0.0.1:8000/</code> pada jendela browser yang bersih.
+    </div>
+    <div class="checklist-item">
+        <div class="checklist-box"></div>
+        <strong>Koneksi Internet Aktif:</strong> Laptop tersambung ke Hotspot HP / WiFi agar Tailwind CSS dan ikon FontAwesome tampil sempurna.
+    </div>
+    <div class="checklist-item">
+        <div class="checklist-box"></div>
+        <strong>Akun Demo Dihafal (Semua password: <code>password</code>):</strong>
+        <ul>
+            <li>Admin: <code>admin@nazelle.test</code></li>
+            <li>Kasir: <code>staff@nazelle.test</code></li>
+            <li>Pelanggan: <code>pelanggan@nazelle.test</code></li>
+        </ul>
+    </div>
+    <div class="checklist-item">
+        <div class="checklist-box"></div>
+        <strong>Tab Kode Penting Terbuka di VS Code:</strong> Siapkan tab <code>StorefrontController.php</code> dan <code>web.php</code>.
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #D97706; color: #874E25; font-size: 9pt;">
+        Nazelle Délices &copy; 2026 &bull; Pâtisserie &amp; Boulangerie Artisanale Management System &bull; All Rights Reserved.
+    </div>
+
+</body>
+</html>

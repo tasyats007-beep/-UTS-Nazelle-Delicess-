@@ -101,3 +101,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/sales/{sale}/cancel', [SaleController::class, 'cancel'])->name('sales.cancel');
     });
 });
+
+// Local Preview Routes for Documentation Screenshots
+if (app()->environment('local')) {
+    Route::get('/preview/dashboard-admin', function () {
+        $admin = \App\Models\User::where('role', 'admin')->first();
+        if ($admin) { \Illuminate\Support\Facades\Auth::login($admin); }
+        return app(\App\Http\Controllers\DashboardController::class)->index();
+    });
+
+    Route::get('/preview/kasir-pos', function () {
+        $staff = \App\Models\User::where('role', 'staff')->first() ?: \App\Models\User::where('role', 'admin')->first();
+        if ($staff) { \Illuminate\Support\Facades\Auth::login($staff); }
+        return app(\App\Http\Controllers\SaleController::class)->create();
+    });
+}
