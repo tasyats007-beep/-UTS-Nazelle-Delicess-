@@ -1,0 +1,113 @@
+========================================================================
+       PANDUAN LENGKAP MENJALANKAN NAZELLE DELICES DI VS CODE
+========================================================================
+
+Lokasi Folder Project:
+C:\Users\ASUS\Documents\Nazelle-Delices
+
+Seluruh project ini sudah bersifat self-contained (lengkap dalam 1 folder):
+- Source code Laravel lengkap (app, routes, resources, config, database)
+- Vendor & library composer sudah terpasang di folder 'vendor'
+- Konfigurasi .env dan .env.example sudah tersedia
+- Script otomatis 'jalankan.bat' dan 'run.bat' siap pakai
+
+------------------------------------------------------------------------
+A. CARA TERCEPAT MENJALANKAN DI VS CODE:
+------------------------------------------------------------------------
+1. Buka aplikasi Visual Studio Code (VS Code).
+2. Klik menu "File" -> "Open Folder..." (atau tekan Ctrl + K, lalu Ctrl + O).
+3. Pilih folder project:
+   C:\Users\ASUS\Documents\Nazelle-Delices
+4. Buka Terminal di VS Code:
+   - Klik menu "Terminal" -> "New Terminal" (atau tekan Ctrl + `).
+5. Jalankan perintah:
+   .\jalankan.bat
+   
+   (Atau jika PHP sudah ada di PATH sistem, cukup ketik: php artisan serve)
+6. Buka browser dan buka alamat:
+   http://127.0.0.1:8000
+
+------------------------------------------------------------------------
+B. CARA MENJALANKAN MANUAL VIA PERINTAH LARAVEL:
+------------------------------------------------------------------------
+Jika Anda menjalankan perintah secara bertahap di terminal VS Code:
+
+1. Salin file konfigurasi environment (jika belum ada):
+   copy .env.example .env
+
+2. Generate application key:
+   php artisan key:generate
+
+3. Siapkan database:
+   - OPSI 1: SQLite (Bawaan & Paling Mudah)
+     Jika database/database.sqlite belum ada, buat file kosong:
+     type nul > database\database.sqlite
+     php artisan migrate --seed
+
+   - OPSI 2: MySQL (XAMPP)
+     a. Buka XAMPP Control Panel, Start Apache & MySQL.
+     b. Buka phpMyAdmin (http://localhost/phpmyadmin), buat database bernama: nazelle_delices
+     c. Buka file .env dan sesuaikan:
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=nazelle_delices
+        DB_USERNAME=root
+        DB_PASSWORD=
+     d. Jalankan migrasi dan seeder:
+        php artisan migrate:fresh --seed
+
+4. Jalankan server lokal:
+   php artisan serve
+
+5. Akses website di browser:
+   http://127.0.0.1:8000
+
+------------------------------------------------------------------------
+C. DAFTAR AKUN LOGIN BAWAAN (HASIL SEEDER):
+------------------------------------------------------------------------
+Semua akun bawaan menggunakan kata sandi: password
+
+1. ADMIN / OWNER TOKO (Hak Akses Tertinggi):
+   - Email    : admin@nazelle.test
+   - Password : password
+   - Fitur    : Dashboard analitik, manajemen pengguna (Staff/Pelanggan),
+                CRUD Master Produk & Kategori, Supplier, Restock Beli,
+                POS Kasir, dan Pembatalan Transaksi (Restore Stok).
+
+2. STAFF (Kasir & Baker):
+   - Email    : staff@nazelle.test
+   - Password : password
+   - Fitur    : Dashboard operasional kasir, Kasir POS penjualan,
+                pencatatan restock bahan dari supplier, katalog produk.
+
+3. PELANGGAN (Customer):
+   - Email    : pelanggan@nazelle.test
+   - Password : password
+   - Fitur    : Belanja pastry, keranjang checkout, simulasi pembayaran,
+                cetak invoice/nota resmi, lacak riwayat pesanan.
+
+------------------------------------------------------------------------
+D. CARA UPLOAD PROJECT KE REPOSITORY GITHUB:
+------------------------------------------------------------------------
+1. Buat repository baru di situs GitHub (https://github.com/new).
+   Beri nama repository (contoh: nazelle-delices-uts).
+   PILIH: Kosongkan (jangan centang README, .gitignore, atau license).
+
+2. Buka Terminal di VS Code pada folder project ini.
+
+3. Jalankan perintah Git berikut secara berurutan:
+   git init
+   git add .
+   git commit -m "Initial commit: Nazelle Delices Laravel UTS Project"
+   git branch -M main
+   git remote add origin https://github.com/USERNAME-ANDA/NAMA-REPO-ANDA.git
+   git push -u origin main
+
+Catatan Keamanan Git:
+- File '.env' otomatis diabaikan oleh .gitignore sehingga password/kunci rahasia
+  tidak akan ter-upload ke publik.
+- File '.env.example' aman untuk dibagikan kepada dosen/penilai.
+- Folder 'vendor' diabaikan karena dapat diinstal ulang via 'composer install'.
+
+========================================================================
