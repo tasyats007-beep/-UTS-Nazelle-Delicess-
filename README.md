@@ -52,14 +52,24 @@ Pusat pemantauan bisnis pemilik toko: menampilkan metrik total varian produk akt
 
 ---
 
-### 6. Sistem Kasir POS Toko Roti (`/sales/create`)
+### 6. Manajemen Menu Khusus Owner / Admin (`/products` atau `/admin/menu`)
+Modul CRUD (*Create, Read, Update, Delete*) lengkap dan terintegrasi untuk pengelolaan menu butik Nazelle Délices:
+- **Lihat Menu (Read)**: Menampilkan seluruh katalog produk dalam tabel elegan bernuansa cokelat tua (`#3D2010`) dan emas, lengkap dengan 3 kartu ringkasan (*Total Menu, Stok Kritis, Total Kategori*), pencarian instan nama/SKU, filter kategori, dan tombol pintas ke etalase katalog pelanggan.
+- **Tambah Menu (Create)**: Formulir pembuatan produk baru dengan nama, kategori, harga jual, stok awal, deskripsi, link foto, **4 tombol preset foto pastry instan** (Croissant, Pain au Chocolat, Sourdough, Tart Buah), serta fitur **Live Preview Gambar**. Pengaturan teknis (SKU & HPP) dibuat opsional dan otomatis dihitung di latar belakang jika dikosongkan.
+- **Ubah Menu (Update)**: Mengubah informasi nama, kategori, harga jual, stok, deskripsi, dan foto produk dengan data lama yang sudah terisi otomatis.
+- **Hapus Menu (Delete)**: Tombol hapus dengan konfirmasi pop-up browser, disertai proteksi pembukuan (*data integrity safeguard*) yang mencegah penghapusan produk jika sudah memiliki riwayat penjualan di kasir (menyarankan stok diatur ke 0).
+- **Keamanan Hak Akses**: Dilindungi secara ketat oleh middleware `EnsureAdmin`. Pengguna non-admin (Pelanggan atau Tamu) yang mencoba mengakses rute ini akan langsung menerima pesan `403 Forbidden`.
+
+---
+
+### 7. Sistem Kasir POS Toko Roti (`/sales/create`)
 Antarmuka kasir cepat untuk melayani pesanan fisik di butik Senopati. Kasir cukup mengklik kartu gambar menu, memasukkan nominal uang tunai yang diterima, dan kalkulator kasir akan otomatis menghitung kembalian uang pembeli.
 
 ![Kasir POS Toko Roti](docs/screenshots/06-kasir-pos.png)
 
 ---
 
-### 7. Faktur Nota Transaksi & Simulasi Pembayaran (`/sales/{sale}/invoice`)
+### 8. Faktur Nota Transaksi & Simulasi Pembayaran (`/sales/{sale}/invoice`)
 Bukti pemesanan resmi format struk belanja (*print-ready thermal receipt*). Dilengkapi tombol **Simulasi Pembayaran (Uji Coba UTS)** untuk menguji perubahan status transaksi menjadi *"Pembayaran Berhasil"* dengan tanggal/jam pelunasan dan nomor referensi unik terverifikasi di database.
 
 ![Faktur Nota Transaksi & Simulasi Pembayaran](docs/screenshots/07-invoice-nota.png)
@@ -275,6 +285,63 @@ Semua akun bawaan menggunakan kata sandi: **`password`**
 
 ---
 
+### B. Panduan Pengujian Fitur CRUD Manajemen Menu di Browser (Step-by-Step)
+
+Untuk mendemonstrasikan atau menguji fitur Manajemen Menu khusus Owner / Admin secara langsung di browser:
+
+#### 1. Login sebagai Owner / Admin
+1. Buka browser ke alamat: `http://127.0.0.1:8000/login`
+2. Masukkan email: **`admin@nazelle.test`** dan password: **`password`** (atau gunakan `admin@bakery.test`).
+3. Klik tombol **Masuk**.
+
+#### 2. Masuk ke Halaman Manajemen Menu
+1. Pada bilah navigasi atas (*navbar*), klik menu **"Manajemen Menu"** (atau buka URL `http://127.0.0.1:8000/products` atau `http://127.0.0.1:8000/admin/menu`).
+2. Perhatikan komponen antarmuka yang tersedia:
+   - Badge emas: **👑 Khusus Owner / Admin • Pengelolaan Katalog Toko**.
+   - 3 Kartu Metrik Ringkasan: **Total Menu Roti & Pastry**, **Stok Kritis / Menipis**, dan **Total Kategori Aktif**.
+   - Kotak pencarian nama/SKU dan dropdown filter kategori.
+   - Tombol **"+ Tambah Menu Baru"** dan tombol **"Lihat Katalog Pelanggan"**.
+
+#### 3. Menguji Tambah Menu Baru (Create)
+1. Klik tombol **"+ Tambah Menu Baru"** di kanan atas (URL: `/products-create`).
+2. Isi formulir pembuatan produk:
+   - **Nama Menu**: `Éclair Café au Lait`
+   - **Kategori**: Pilih `Pastry & Viennoiserie`
+   - **Harga Jual (Rp)**: `32000`
+   - **Stok Awal (pcs)**: `15`
+   - **Deskripsi**: `Kue éclair renyah dengan isian krim moka kopi Prancis dan glasir karamel kopi.`
+   - **Foto Produk**: Masukkan URL gambar atau klik tombol preset **"Tart Buah"** / **"Croissant"**. Kotak **Live Preview Foto** akan langsung menampilkan foto menu.
+   *(Pengaturan Lanjutan: SKU dan HPP/Harga Pokok bersifat opsional, jika dikosongkan akan otomatis dibuatkan oleh sistem).*
+3. Klik tombol **"Simpan & Publikasikan Menu"**.
+4. Sistem akan menyimpan data ke database dan menampilkan notifikasi sukses hijau.
+5. **Verifikasi ke Katalog**: Klik tombol **"Lihat Katalog Pelanggan"** (atau buka `/katalog`). Menu *"Éclair Café au Lait"* langsung tampil secara otomatis di hadapan pelanggan dengan harga Rp 32.000 dan stok 15 pcs.
+
+#### 4. Menguji Ubah / Edit Menu (Update)
+1. Kembali ke halaman **Manajemen Menu** (`/products`).
+2. Cari produk *"Éclair Café au Lait"* lalu klik tombol biru **"Edit"** (ikon pensil).
+3. Ubah harga jual dari `32000` menjadi `35000` dan stok dari `15` menjadi `25`.
+4. Klik tombol **"Simpan Perubahan Menu"**.
+5. Buka kembali halaman `/katalog`: harga produk langsung ter-update menjadi **Rp 35.000** dan informasi stok ter-update menjadi **25 pcs**.
+
+#### 5. Menguji Hapus Menu (Delete)
+1. Di halaman **Manajemen Menu**, cari produk *"Éclair Café au Lait"*.
+2. Klik tombol merah **"Hapus"** (ikon tempat sampah).
+3. Browser akan menampilkan dialog konfirmasi keamanan:
+   > *"Apakah Anda yakin ingin menghapus menu 'Éclair Café au Lait'? Menu ini akan dihapus dari database dan tidak lagi muncul di katalog toko."*
+4. Klik **OK**.
+5. Sistem menghapus data dari database dan memberikan notifikasi sukses.
+6. Buka kembali `/katalog`: produk tersebut otomatis tidak lagi muncul di katalog toko.
+7. *(Catatan Keamanan Audit: Jika produk sudah memiliki riwayat penjualan di kasir, sistem secara cerdas akan menolak penghapusan permanen demi menjaga keutuhan pembukuan, dan menginstruksikan admin untuk mengubah stok menjadi 0).*
+
+#### 6. Menguji Keamanan Hak Akses (Role-Based Access Control)
+1. Logout dari akun Admin.
+2. Login sebagai Pelanggan (`pelanggan@nazelle.test` / `password`).
+3. Coba ketikkan URL form admin di address bar browser:
+   `http://127.0.0.1:8000/admin/menu/create` atau `http://127.0.0.1:8000/products-create`
+4. Server langsung menolak dengan kode status **403 Forbidden** (Akses Ditolak), membuktikan rute terlindungi 100%.
+
+---
+
 ## 6. Panduan Upload Project ke GitHub
 
 Ikuti langkah-langkah berikut untuk meng-upload project ke akun GitHub Anda:
@@ -320,9 +387,9 @@ git push -u origin main
 
 ---
 
-## 7. Hasil Pengujian Otomatis (24 Test Cases - 100% Passed)
+## 7. Hasil Pengujian Otomatis (28 Test Cases - 100% Passed)
 
-Seluruh 24 skenario pengujian fitur dan unit (*feature & unit tests*) pada file [`tests/Feature/InventoryAndSalesTest.php`](tests/Feature/InventoryAndSalesTest.php) berhasil lolos tanpa kendala:
+Seluruh 28 skenario pengujian fitur dan unit (*feature & unit tests*) pada file [`tests/Feature/InventoryAndSalesTest.php`](tests/Feature/InventoryAndSalesTest.php) berhasil lolos tanpa kendala:
 
 ```
 PASS  Tests\Unit\ExampleTest
@@ -354,8 +421,12 @@ PASS  Tests\Feature\InventoryAndSalesTest
 ✓ checkout with instant simulation creates paid transaction immediately
 ✓ landing page is accessible to guests and displays brand and tagline
 ✓ landing page displays masuk and daftar even when logged in
+✓ admin can create menu and it appears in customer catalog
+✓ admin can edit menu and changes reflect in customer catalog
+✓ admin can delete menu without transactions and it disappears from catalog
+✓ customer cannot access menu management crud routes
 
-Tests:  24 passed (63 assertions)
+Tests:  28 passed (59 assertions)
 Time:   1.75s
 ```
 

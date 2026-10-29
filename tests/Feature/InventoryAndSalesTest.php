@@ -598,4 +598,115 @@ class InventoryAndSalesTest extends TestCase
         $response->assertSee('Masuk');
         $response->assertSee('Daftar');
     }
+
+    /** 22. Menu Management: Admin can create menu and it appears in customer catalog */
+    public function test_admin_can_create_menu_and_it_appears_in_customer_catalog(): void
+    {
+        $this->actingAs($this->admin);
+
+        $response = $this->post('/products', [
+            'name' => 'Kouign-Amann Bretagne',
+            'category_id' => $this->category->id,
+            'selling_price' => 32000,
+            'stock' => 12,
+            'description' => 'Kue tradisional Brittany dengan karamelisasi gula dan mentega Prancis.',
+        ]);
+
+        $response->assertRedirect('/products');
+        $this->assertDatabaseHas('products', [
+            'name' => 'Kouign-Amann Bretagne',
+            'selling_price' => 32000,
+            'stock' => 12,
+        ]);
+
+        // Customer sees the new menu in catalog
+        $catalogResponse = $this->get('/katalog');
+        $catalogResponse->assertStatus(200);
+        $catalogResponse->assertSee('Kouign-Amann Bretagne');
+        $catalogResponse->assertSee('32.000');
+    }
+
+    /** 23. Menu Management: Admin can edit menu and changes reflect immediately */
+    public function test_admin_can_edit_menu_and_changes_reflect_in_customer_catalog(): void
+    {
+        $this->actingAs($this->admin);
+
+        $response = $this->put("/products/{$this->product->id}", [
+            'name' => 'Croissant Butter Gold Premium',
+            'category_id' => $this->category->id,
+            'selling_price' => 29000,
+            'stock' => 25,
+            'description' => 'Versi upgrade mentega emas Normandia.',
+        ]);
+
+        $response->assertRedirect('/products');
+        $this->product->refresh();
+
+        $this->assertEquals('Croissant Butter Gold Premium', $this->product->name);
+        $this->assertEquals(29000, $this->product->selling_price);
+        $this->assertEquals(25, $this->product->stock);
+
+        // Catalog shows updated info
+        $catalogResponse = $this->get('/katalog');
+        $catalogResponse->assertSee('Croissant Butter Gold Premium');
+        $catalogResponse->assertSee('29.000');
+    }
+
+    /** 24. Menu Management: Admin can delete unused menu and it disappears from catalog */
+    public function test_admin_can_delete_menu_without_transactions_and_it_disappears_from_catalog(): void
+    {
+        $this->actingAs($this->admin);
+
+        $tempProduct = Product::create([
+            'sku' => 'TMP-DEL-001',
+            'name' => 'Menu Sementara Hapus',
+            'category_id' => $this->category->id,
+            'purchase_price' => 10000,
+            'selling_price' => 20000,
+            'stock' => 5,
+            'minimum_stock' => 2,
+        ]);
+
+        $deleteResponse = $this->delete("/products/{$tempProduct->id}");
+        $deleteResponse->assertRedirect('/products');
+
+        $this->assertDatabaseMissing('products', ['id' => $tempProduct->id]);
+
+        // Clear session flash to ensure catalog assertion inspects catalog items, not session notification
+        session()->forget('success');
+
+        // Does not appear in catalog anymore
+        $catalogResponse = $this->get('/katalog');
+        $catalogResponse->assertDontSee('Menu Sementara Hapus');
+    }
+
+    /** 25. Security: Non-admin users are forbidden from creating, editing, and deleting menu */
+    public function test_customer_cannot_access_menu_management_crud_routes(): void
+    {
+        $customer = User::factory()->create(['role' => 'customer']);
+        $this->actingAs($customer);
+
+        // Cannot view create form
+        $this->get('/products-create')->assertStatus(403);
+        $this->get('/admin/menu/create')->assertStatus(403);
+
+        // Cannot post new menu
+        $this->post('/products', [
+            'name' => 'Hacker Cake',
+            'category_id' => $this->category->id,
+            'selling_price' => 100,
+        ])->assertStatus(403);
+
+        // Cannot edit menu
+        $this->get("/products/{$this->product->id}/edit")->assertStatus(403);
+        $this->put("/products/{$this->product->id}", [
+            'name' => 'Hacked Name',
+            'category_id' => $this->category->id,
+            'selling_price' => 500,
+            'stock' => 10,
+        ])->assertStatus(403);
+
+        // Cannot delete menu
+        $this->delete("/products/{$this->product->id}")->assertStatus(403);
+    }
 }

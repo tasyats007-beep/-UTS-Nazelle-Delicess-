@@ -157,8 +157,8 @@
 
                             <!-- Master Data Dropdown / Direct Links -->
                             <a href="{{ route('products.index') }}"
-                               class="px-3.5 py-2 rounded-lg transition {{ request()->routeIs('products.*') ? 'bg-bakery-100 text-bakery-800 font-bold' : 'text-stone-600 hover:text-bakery-800 hover:bg-bakery-50' }}">
-                                <i class="fa-solid fa-bread-slice mr-1.5 text-bakery-600"></i> Master Produk
+                               class="px-3.5 py-2 rounded-lg transition {{ request()->routeIs('products.*') || request()->routeIs('admin.menu*') ? 'bg-bakery-100 text-bakery-800 font-bold' : 'text-stone-600 hover:text-bakery-800 hover:bg-bakery-50' }}">
+                                <i class="fa-solid fa-bread-slice mr-1.5 text-bakery-600"></i> Manajemen Menu
                             </a>
 
                             <a href="{{ route('categories.index') }}"

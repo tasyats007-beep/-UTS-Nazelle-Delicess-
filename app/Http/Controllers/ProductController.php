@@ -36,7 +36,20 @@ class ProductController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('products.index', compact('products', 'categories', 'search', 'categoryId', 'lowStockOnly'));
+        $totalProductsCount = Product::count();
+        $lowStockProductsCount = Product::lowStock()->count();
+        $totalCategoriesCount = $categories->count();
+
+        return view('products.index', compact(
+            'products',
+            'categories',
+            'search',
+            'categoryId',
+            'lowStockOnly',
+            'totalProductsCount',
+            'lowStockProductsCount',
+            'totalCategoriesCount'
+        ));
     }
 
     public function create(): View
@@ -48,23 +61,44 @@ class ProductController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'sku' => ['required', 'string', 'max:50', 'unique:products,sku'],
+            'sku' => ['nullable', 'string', 'max:50', 'unique:products,sku'],
             'name' => ['required', 'string', 'max:150'],
             'category_id' => ['required', 'exists:categories,id'],
             'description' => ['nullable', 'string', 'max:1000'],
             'image_url' => ['nullable', 'string', 'max:500'],
-            'purchase_price' => ['required', 'numeric', 'min:0'],
+            'purchase_price' => ['nullable', 'numeric', 'min:0'],
             'selling_price' => ['required', 'numeric', 'min:0'],
             'stock' => ['nullable', 'integer', 'min:0'],
-            'minimum_stock' => ['required', 'integer', 'min:0'],
+            'minimum_stock' => ['nullable', 'integer', 'min:0'],
+        ], [
+            'name.required' => 'Nama menu pastry/roti wajib diisi.',
+            'category_id.required' => 'Silakan pilih kategori menu.',
+            'category_id.exists' => 'Kategori yang dipilih tidak valid.',
+            'selling_price.required' => 'Harga jual menu wajib diisi.',
+            'selling_price.min' => 'Harga jual tidak boleh bernilai negatif.',
+            'purchase_price.min' => 'Harga pokok/beli tidak boleh bernilai negatif.',
+            'sku.unique' => 'Kode SKU ini sudah digunakan oleh menu lain. Gunakan SKU yang berbeda.',
         ]);
 
-        $validated['stock'] = $validated['stock'] ?? 0;
+        // Auto-generate SKU if not provided by user
+        if (empty($validated['sku'])) {
+            $cat = Category::find($validated['category_id']);
+            $catCode = $cat ? strtoupper(substr(preg_replace('/[^a-zA-Z]/', '', $cat->name), 0, 3)) : 'BAK';
+            $validated['sku'] = "BAK-{$catCode}-" . strtoupper(bin2hex(random_bytes(2)));
+        }
 
-        Product::create($validated);
+        // Auto-estimate purchase cost if empty (default 60% of selling price)
+        if (!isset($validated['purchase_price']) || $validated['purchase_price'] === null) {
+            $validated['purchase_price'] = round($validated['selling_price'] * 0.6, 2);
+        }
+
+        $validated['stock'] = $validated['stock'] ?? 0;
+        $validated['minimum_stock'] = $validated['minimum_stock'] ?? 5;
+
+        $product = Product::create($validated);
 
         return redirect()->route('products.index')
-            ->with('success', 'Produk berhasil ditambahkan.');
+            ->with('success', "Menu '{$product->name}' berhasil ditambahkan ke database dan otomatis tersedia di katalog toko!");
     }
 
     public function show(Product $product): View
@@ -95,32 +129,52 @@ class ProductController extends Controller
     public function update(Request $request, Product $product): RedirectResponse
     {
         $validated = $request->validate([
-            'sku' => ['required', 'string', 'max:50', Rule::unique('products', 'sku')->ignore($product->id)],
+            'sku' => ['nullable', 'string', 'max:50', Rule::unique('products', 'sku')->ignore($product->id)],
             'name' => ['required', 'string', 'max:150'],
             'category_id' => ['required', 'exists:categories,id'],
             'description' => ['nullable', 'string', 'max:1000'],
             'image_url' => ['nullable', 'string', 'max:500'],
-            'purchase_price' => ['required', 'numeric', 'min:0'],
+            'purchase_price' => ['nullable', 'numeric', 'min:0'],
             'selling_price' => ['required', 'numeric', 'min:0'],
             'stock' => ['required', 'integer', 'min:0'],
-            'minimum_stock' => ['required', 'integer', 'min:0'],
+            'minimum_stock' => ['nullable', 'integer', 'min:0'],
+        ], [
+            'name.required' => 'Nama menu pastry/roti wajib diisi.',
+            'category_id.required' => 'Silakan pilih kategori menu.',
+            'selling_price.required' => 'Harga jual menu wajib diisi.',
+            'selling_price.min' => 'Harga jual tidak boleh bernilai negatif.',
+            'purchase_price.min' => 'Harga pokok/beli tidak boleh bernilai negatif.',
+            'stock.required' => 'Jumlah stok menu wajib diisi.',
+            'stock.min' => 'Stok tidak boleh bernilai negatif.',
+            'sku.unique' => 'Kode SKU ini sudah digunakan oleh menu lain.',
         ]);
+
+        if (empty($validated['sku'])) {
+            $validated['sku'] = $product->sku;
+        }
+
+        if (!isset($validated['purchase_price']) || $validated['purchase_price'] === null) {
+            $validated['purchase_price'] = $product->purchase_price ?: round($validated['selling_price'] * 0.6, 2);
+        }
+
+        $validated['minimum_stock'] = $validated['minimum_stock'] ?? $product->minimum_stock ?? 5;
 
         $product->update($validated);
 
         return redirect()->route('products.index')
-            ->with('success', 'Data produk berhasil diperbarui.');
+            ->with('success', "Menu '{$product->name}' berhasil diperbarui! Perubahan harga dan informasi langsung terlihat di katalog pelanggan.");
     }
 
     public function destroy(Product $product): RedirectResponse
     {
         if ($product->saleItems()->exists() || $product->purchaseItems()->exists()) {
-            return back()->with('error', 'Produk tidak dapat dihapus karena sudah memiliki riwayat transaksi pembelian atau penjualan.');
+            return back()->with('error', "Menu '{$product->name}' tidak dapat dihapus karena sudah memiliki riwayat transaksi (untuk menjaga integritas pembukuan toko). Anda dapat mengubah stoknya menjadi 0 agar tidak dapat dipesan.");
         }
 
+        $productName = $product->name;
         $product->delete();
 
         return redirect()->route('products.index')
-            ->with('success', 'Produk berhasil dihapus.');
+            ->with('success', "Menu '{$productName}' berhasil dihapus dari database dan tidak lagi muncul di katalog toko.");
     }
 }

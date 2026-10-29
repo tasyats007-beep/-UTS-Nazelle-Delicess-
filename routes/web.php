@@ -77,7 +77,9 @@ Route::middleware('auth')->group(function () {
         // User & Role Management
         Route::resource('users', UserController::class)->except(['show']);
 
-        // Master Data Management (Create/Edit/Delete)
+        // Master Data & Menu Management (Khusus Owner / Admin)
+        Route::get('/admin/menu', [ProductController::class, 'index'])->name('admin.menu');
+        Route::get('/admin/menu/create', [ProductController::class, 'create'])->name('admin.menu.create');
         Route::get('/products-create', [ProductController::class, 'create'])->name('products.create');
         Route::post('/products', [ProductController::class, 'store'])->name('products.store');
         Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
